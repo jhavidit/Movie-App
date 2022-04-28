@@ -10,11 +10,16 @@ import tech.jhavidit.movie_app.utilities.Resource
 
 interface ApiService {
 
-    @GET("trending")
+    @GET("trending/movies/week")
     suspend fun loadTrendingMovies(
-        @Query("api_key") apiKey: String = API_KEY,
-        @Path("media_type") mediaType: String = "movies",
-        @Path("time_window") timeWindow: String = "week"
+//        @Path("media_type") mediaType: String = "movies",
+//        @Path("time_window") timeWindow: String = "week",
+        @Query("api_key") apiKey: String = API_KEY
+    ): PopularMovieModel
+
+    @GET("trending/tv/week")
+    suspend fun loadTrendingTvShows(
+        @Query("api_key") apiKey: String = API_KEY
     ): PopularMovieModel
 
 

@@ -6,6 +6,8 @@ import tech.jhavidit.movie_app.utilities.API_KEY
 
 class MovieApiRepository(private val apiService: ApiService) {
 
-    suspend fun loadTrendingValues() = apiService.loadTrendingMovies()
+    suspend fun loadTrendingMovies() = apiService.loadTrendingMovies()
+
+    suspend fun loadTrendingTvShows() = apiService.loadTrendingTvShows()
 
 }
