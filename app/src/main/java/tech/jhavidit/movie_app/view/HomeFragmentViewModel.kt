@@ -1,13 +1,11 @@
 package tech.jhavidit.movie_app.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.*
 import tech.jhavidit.movie_app.model.Result
 import tech.jhavidit.movie_app.repository.MovieApiRepository
 import tech.jhavidit.movie_app.utilities.Resource
@@ -22,7 +20,7 @@ class HomeFragmentViewModel(private val movieApiRepository: MovieApiRepository) 
     }
 
     private fun fetchPopular() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             popularMovie.postValue(Resource.loading(null))
             popularTvShow.postValue(Resource.loading(null))
             supervisorScope {
@@ -32,11 +30,13 @@ class HomeFragmentViewModel(private val movieApiRepository: MovieApiRepository) 
                     async(Dispatchers.IO) { movieApiRepository.loadTrendingTvShows().results }
                 try {
                     popularMovie.postValue(Resource.success(popularMovieData.await()))
+                    Log.d("apiResult", popularMovieData.await().toString())
                 } catch (e: Exception) {
                     popularMovie.postValue(Resource.error(e.toString(), null))
                 }
                 try {
                     popularTvShow.postValue(Resource.success(popularTvShowData.await()))
+                    Log.d("apiResult", popularTvShowData.await().toString())
                 } catch (e: Exception) {
                     popularTvShow.postValue(Resource.error(e.toString(), null))
                 }
