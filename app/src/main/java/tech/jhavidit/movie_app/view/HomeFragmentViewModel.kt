@@ -5,12 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.*
 import tech.jhavidit.movie_app.model.Result
 import tech.jhavidit.movie_app.repository.MovieApiRepository
 import tech.jhavidit.movie_app.utilities.Resource
+import javax.inject.Inject
 
-class HomeFragmentViewModel(private val movieApiRepository: MovieApiRepository) : ViewModel() {
+@HiltViewModel
+class HomeFragmentViewModel @Inject constructor(
+    private val movieApiRepository: MovieApiRepository,
+) : ViewModel() {
 
     private val popularMovie = MutableLiveData<Resource<List<Result?>>>()
     private val popularTvShow = MutableLiveData<Resource<List<Result?>>>()

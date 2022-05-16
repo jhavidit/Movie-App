@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -133,4 +134,8 @@ dependencies {
 
     // UI Tests
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
+
+    //Dagger-Hilt
+    implementation("com.google.dagger:hilt-android:2.40")
+    kapt("com.google.dagger:hilt-android-compiler:2.40")
 }

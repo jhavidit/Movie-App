@@ -12,8 +12,6 @@ interface ApiService {
 
     @GET("trending/movies/week")
     suspend fun loadTrendingMovies(
-//        @Path("media_type") mediaType: String = "movies",
-//        @Path("time_window") timeWindow: String = "week",
         @Query("api_key") apiKey: String = API_KEY
     ): PopularMovieModel
 

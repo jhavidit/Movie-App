@@ -1,13 +1,11 @@
 package tech.jhavidit.movie_app.repository
 
-import tech.jhavidit.movie_app.network.ApiService
-import tech.jhavidit.movie_app.network.RetrofitBuilder
-import tech.jhavidit.movie_app.utilities.API_KEY
+import tech.jhavidit.movie_app.model.PopularMovieModel
 
-class MovieApiRepository(private val apiService: ApiService) {
+interface MovieApiRepository {
 
-    suspend fun loadTrendingMovies() = apiService.loadTrendingMovies()
+    suspend fun loadTrendingMovies(): PopularMovieModel
 
-    suspend fun loadTrendingTvShows() = apiService.loadTrendingTvShows()
+    suspend fun loadTrendingTvShows(): PopularMovieModel
 
 }

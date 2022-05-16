@@ -8,19 +8,27 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Retrofit
 import tech.jhavidit.movie_app.databinding.FragmentHomeFragmantBinding
-import tech.jhavidit.movie_app.network.RetrofitBuilder
-import tech.jhavidit.movie_app.repository.MovieApiRepository
+import tech.jhavidit.movie_app.model.PopularMovieModel
+import tech.jhavidit.movie_app.network.ApiService
+import tech.jhavidit.movie_app.network.ApplicationModule
+import tech.jhavidit.movie_app.network.ApplicationModule_ProvideApiHelperFactory.provideApiHelper
+import tech.jhavidit.movie_app.network.ApplicationModule_ProvideApiServiceFactory.provideApiService
+import tech.jhavidit.movie_app.repository.MovieApiRepositoryImplementation
 import tech.jhavidit.movie_app.utilities.Status
 import tech.jhavidit.movie_app.utilities.ViewModelFactory
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeFragmantBinding
-    private lateinit var viewModel: HomeFragmentViewModel
+    private val viewModel: HomeFragmentViewModel by viewModels()
     private lateinit var movieListAdapter: MovieListAdapter
     private lateinit var tvShowListAdapter: MovieListAdapter
 
@@ -30,10 +38,7 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeFragmantBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelFactory(MovieApiRepository(RetrofitBuilder().apiService))
-        ).get(HomeFragmentViewModel::class.java)
+
         movieListAdapter = MovieListAdapter()
         tvShowListAdapter = MovieListAdapter()
         binding.rvPopularMovie.apply {
